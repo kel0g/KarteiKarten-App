@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import { NavLink } from "react-router-dom";
 import './App.css'
-import Bibliothek from './deineBibiliotek';
 
-function App() {
+function Bibliothek() {
   const [count, setCount] = useState(0)
 
   return (
@@ -21,10 +19,11 @@ function App() {
             <span className="navIcon">🏠</span>
             Start
           </a>
-          <NavLink to="/deineBibiliotek" className="navItem">
-          <span className="navIcon">📁</span>
-          Deine Bibliothek
-          </NavLink>
+
+          <a className="navItem" href="#">
+            <span className="navIcon">📁</span>
+            Deine Bibliothek
+          </a>
 
           <div className="navDivider" />
 
@@ -54,8 +53,6 @@ function App() {
 
       {/* Main */}
       <main className="main">
-        
-
         {/* Topbar */}
         <header className="topbar">
           <div className="searchWrap">
@@ -75,13 +72,13 @@ function App() {
 
         {/* Content */}
         <div className="content">
-          <h2 className="sectionHeading">Recents</h2>
+          <h2 className="sectionHeading">Deine Karteikarten</h2>
 
           <div className="recentRow">
             <div className="recentIcon">🃏</div>
             <div className="recentText">
               <div className="recentTitle">
-                Beispiel Lernset / Kapitel 1 / Zusammenfassung …
+                Beispiel Lernset / Kapitel 2 / Zusammenfassung …
               </div>
               <div className="recentSub">28 cards • by User</div>
             </div>
@@ -95,12 +92,9 @@ function App() {
             </div>
           </div>
         </div>
-        {/*<Routes>
-          <Route path="/deineBibiliotek" element={<Bibliothek />} />
-        </Routes>*/}
       </main>
     </div>
   );
 }
 
-export default App
+export default Bibliothek
