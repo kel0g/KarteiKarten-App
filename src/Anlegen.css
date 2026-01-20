@@ -1,0 +1,93 @@
+.anlegen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardForm textarea,
+.cardForm input,
+.search {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: inherit;
+}
+
+.cardForm textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+button.danger {
+  border-color: rgba(255, 80, 80, 0.4);
+  background: rgba(255, 80, 80, 0.15);
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardItem {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cardActions {
+  display: flex;
+  gap: 6px;
+}
+
+.cardBack {
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+.tags {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tags span {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}

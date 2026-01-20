@@ -1,10 +1,12 @@
-export default function Bibliothek() {
+export default function Start() {
   return (
     <>
-      <h2 className="sectionHeading">Deine Karteikarten</h2>
-      {/* dein Bibliothek-Content */}
+      <h2 className="sectionHeading">Recents</h2>
+      {/* dein Start-Content */}
+      
       {/* Main */}
       <main className="main">
+    
 
         {/* Content */}
         <div className="content">
@@ -13,7 +15,7 @@ export default function Bibliothek() {
             <div className="recentIcon">🃏</div>
             <div className="recentText">
               <div className="recentTitle">
-                Beispiel Lernset / Kapitel 2 / Zusammenfassung …
+                Beispiel Lernset / Kapitel 1 / Zusammenfassung …
               </div>
               <div className="recentSub">28 cards • by User</div>
             </div>
