@@ -13,73 +13,21 @@ const mockCards: Card[] = [
   { id: "3", front: "Ableitung von sin(x)", back: "cos(x)", tags: ["mathe"] },
 ];
 
-function TagPill({ text }: { text: string }) {
-  return (
-    <span className="inline-flex items-center rounded-full border bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700">
-      {text}
-    </span>
-  );
-}
-
-function CardPreview({ card, index }: { card: Card; index: number }) {
-  return (
-    <div className="rounded-2xl border bg-white shadow-sm">
-      <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-700">
-              {index + 1}
-            </span>
-            <div className="min-w-0">
-              <div className="truncate text-sm font-semibold text-slate-900">{card.front}</div>
-              <div className="truncate text-xs text-slate-500">
-                {card.tags.length ? `Tags: ${card.tags.join(", ")}` : "Keine Tags"}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-2">
-          <button type="button" className="rounded-xl border px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
-            Duplizieren
-          </button>
-          <button
-            type="button"
-            className="rounded-xl border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-50"
-          >
-            Löschen
-          </button>
-        </div>
-      </div>
-
-      <div className="grid gap-4 p-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-800">Vorderseite</label>
-          <textarea
-            className="min-h-[110px] w-full resize-y rounded-2xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
-            value={card.front}
-            readOnly
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-800">Rückseite</label>
-          <textarea
-            className="min-h-[110px] w-full resize-y rounded-2xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
-            value={card.back}
-            readOnly
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2 border-t px-4 py-3">
-        {card.tags.length ? card.tags.map((t) => <TagPill key={t} text={t} />) : <span className="text-sm text-slate-500">Keine Tags</span>}
-      </div>
-    </div>
-  );
-}
-
 export default function Anlegen() {
   const allTags = Array.from(new Set(mockCards.flatMap((c) => c.tags))).sort();
+
+  const karteikarteAnlegenButton = async () => {
+    const response = await fetch("http://localhost:8000/button-click", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ value: "hallo aus react" }),
+    });
+
+    const data = await response.json();
+    console.log("Antwort von Python:", data.result);
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -169,7 +117,7 @@ export default function Anlegen() {
           <section className="rounded-2xl border bg-white p-4 shadow-sm">
             <h2 className="text-base font-bold text-slate-900">Aktionen</h2>
             <div className="mt-4 grid gap-2">
-              <button type="button" className="rounded-2xl border bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+              <button type="button" className="rounded-2xl border bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" onClick={karteikarteAnlegenButton}>
                 + Neue Karte
               </button>
               <button type="button" className="rounded-2xl border bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
@@ -193,12 +141,6 @@ export default function Anlegen() {
                 Auswahl
               </button>
             </div>
-          </div>
-
-          <div className="grid gap-4">
-            {mockCards.map((c, i) => (
-              <CardPreview key={c.id} card={c} index={i} />
-            ))}
           </div>
 
           <footer className="rounded-2xl border bg-white p-4 text-sm text-slate-600 shadow-sm">
