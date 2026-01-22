@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Anlegen.css"
 
 type Card = {
@@ -16,8 +17,10 @@ const mockCards: Card[] = [
 export default function Anlegen() {
   const allTags = Array.from(new Set(mockCards.flatMap((c) => c.tags))).sort();
 
+  const [html, setHtml] = useState("");
+
   const karteikarteAnlegenButton = async () => {
-    const response = await fetch("http://localhost:8000/button-click", {
+    const response = await fetch("http://localhost:5000/button-click", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,6 +29,7 @@ export default function Anlegen() {
     });
 
     const data = await response.json();
+    setHtml(data.html); 
     console.log("Antwort von Python:", data.result);
   };
 
@@ -133,6 +137,10 @@ export default function Anlegen() {
               <h2 className="text-base font-bold text-slate-900">Karten</h2>
               <p className="text-sm text-slate-600">{mockCards.length} Karten (Vorschau)</p>
             </div>
+            {html && (
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+            )}
+
             <div className="flex items-center gap-2">
               <button type="button" className="rounded-2xl border bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                 Sortieren

@@ -1,22 +1,20 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+# server.py
+import subprocess
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 from karteikarten_erstellen import neukarteikarte
 
-app = FastAPI()
-
-# CORS für React erlauben
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = Flask(__name__)
+CORS(app)
 
 @app.post("/button-click")
-def button_click(data: dict):
-    print("Button geklickt mit Daten:", data)
-
+def anlegen():
+    
     neuekarteikarte = neukarteikarte()
 
-    return neuekarteikarte
+    return jsonify({"html": neuekarteikarte})
+    
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000, debug=True)
