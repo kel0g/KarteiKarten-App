@@ -52,7 +52,7 @@ def neukarteikarte():
 
     <button
       type="button"
-      class="rounded-xl border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-50"
+      class="rounded-xl border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-50" onClick={loschen}
     >
       Löschen
     </button>
