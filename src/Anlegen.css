@@ -91,3 +91,128 @@ button.danger {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
 }
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Karteikarte */
+.flashcard {
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Hover Effekt */
+.flashcard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+
+/* Header */
+.flashcard-header {
+  background: linear-gradient(90deg, #0f172a, #334155);
+  color: white;
+  padding: 14px 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Nummer Kreis */
+.flashcard-number {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background: white;
+  color: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Body Bereich */
+.flashcard-body {
+  padding: 18px;
+  display: grid;
+  gap: 18px;
+}
+
+/* Labels */
+.flashcard-body label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Textareas */
+.flashcard-body textarea {
+  width: 100%;
+  min-height: 110px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  padding: 12px;
+  font-size: 14px;
+  resize: vertical;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Fokus Effekt */
+.flashcard-body textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* Footer Buttons */
+.flashcard-footer {
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #f9fafb;
+}
+
+/* Button Standard */
+.flashcard-footer button {
+  border: none;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+/* Duplizieren Button */
+.flashcard-footer .btn-duplicate {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.flashcard-footer .btn-duplicate:hover {
+  background: #cbd5e1;
+  transform: scale(1.05);
+}
+
+/* Löschen Button */
+.flashcard-footer .btn-delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.flashcard-footer .btn-delete:hover {
+  background: #fecaca;
+  transform: scale(1.05);
+}

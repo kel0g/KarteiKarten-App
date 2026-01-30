@@ -1,5 +1,6 @@
 # server.py
 import subprocess
+import uuid
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -11,9 +12,8 @@ CORS(app)
 @app.post("/button-click")
 def anlegen():
     
-    neuekarteikarte = neukarteikarte()
-
-    return jsonify({"html": neuekarteikarte})
+    _ = request.get_json(silent=True)  # optional: falls du Body brauchst
+    return jsonify({"id": str(uuid.uuid4())})
     
 
 if __name__ == "__main__":
