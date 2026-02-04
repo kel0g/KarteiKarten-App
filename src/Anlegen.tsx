@@ -15,6 +15,11 @@ const mockCards: Card[] = [
 export default function Anlegen() {
   // Hier: echte Karten-Liste (statt HTML-String)
   const [cards, setCards] = useState<Card[]>(mockCards);
+  const [deckName, setDeckName] = useState("Bio – Kapitel 3");
+  const [deckDescription, setDeckDescription] = useState(
+  "Karteikarten für die nächste Klausur."
+);
+
 
   const allTags = useMemo(() => {
     return Array.from(new Set(cards.flatMap((c) => c.tags))).sort();
@@ -26,6 +31,7 @@ export default function Anlegen() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ value: "hallo aus react" }),
     });
+    
 
     const data: { id: string } = await response.json();
 
@@ -38,6 +44,29 @@ export default function Anlegen() {
 
     setCards((prev) => [newCard, ...prev]); // oben einfügen
   };
+
+  const saveToDb = async () => {
+  const response = await fetch("http://127.0.0.1:5000/save-cards", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      deck: {
+        name: deckName,
+        description: deckDescription,
+      },
+      cards,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error("Speichern fehlgeschlagen");
+    return;
+  }
+
+  const data = await response.json();
+  console.log("Gespeichert:", data);
+};
+
 
   const deleteCard = (id: string) => {
     setCards((prev) => prev.filter((c) => c.id !== id));
@@ -96,6 +125,7 @@ export default function Anlegen() {
             <button
               type="button"
               className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+              onClick={saveToDb}
             >
               Speichern
             </button>
@@ -113,7 +143,8 @@ export default function Anlegen() {
                 <input
                   className="w-full rounded-2xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
                   placeholder="z.B. Biologie – Kapitel 3"
-                  defaultValue="Bio – Kapitel 3"
+                  value={deckName}
+                  onChange={(e) => setDeckName(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
@@ -121,7 +152,8 @@ export default function Anlegen() {
                 <textarea
                   className="min-h-[96px] w-full resize-y rounded-2xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
                   placeholder="Optional …"
-                  defaultValue="Karteikarten für die nächste Klausur."
+                  value={deckDescription}
+                  onChange={(e) => setDeckDescription(e.target.value)}
                 />
               </div>
             </div>
