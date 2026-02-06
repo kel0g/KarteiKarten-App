@@ -1,0 +1,230 @@
+.viewPage {
+  min-height: 100vh;
+  background: #f8fafc;
+  font-family: system-ui, sans-serif;
+}
+
+.viewHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.viewHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.viewBackBtn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 14px;
+  padding: 8px 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.viewBackBtn:hover { background: #f1f5f9; }
+
+.viewTitleWrap { min-width: 0; }
+
+.viewTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viewSub {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viewHeaderRight {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.viewSmallBtn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 14px;
+  padding: 8px 10px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.viewSmallBtn:hover { background: #f1f5f9; }
+
+.viewMain {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.viewToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.viewSearchWrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.viewSearch {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: box-shadow 0.15s ease, border 0.15s ease;
+}
+
+.viewSearch:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22);
+}
+
+.viewCount {
+  font-size: 12px;
+  font-weight: 800;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.viewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.viewCard {
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.viewCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.14);
+}
+
+.viewCardTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f9fafb;
+}
+
+.viewCardNum {
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 12px;
+  background: #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.viewTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.viewTag {
+  font-size: 11px;
+  font-weight: 800;
+  color: #334155;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.viewFlipBtn {
+  margin-left: auto;
+  border: none;
+  border-radius: 14px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 900;
+  background: #0f172a;
+  color: white;
+  cursor: pointer;
+}
+
+.viewFlipBtn:hover { opacity: 0.92; }
+
+.viewCardBody {
+  padding: 14px;
+}
+
+.viewLabel {
+  font-size: 12px;
+  font-weight: 900;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.viewText {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.viewEmpty {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.viewEmptyState {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+  background: white;
+  color: #64748b;
+  font-weight: 700;
+}

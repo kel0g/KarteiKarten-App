@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import Start from "./Start";
 import Bibliothek from "./deineBibiliotek";
 import Anlegen from "./Anlegen";
+import KarteikartenAnsicht from "./karteikarten_ansicht";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <Route path="/" element={<Start />} />
         <Route path="/deineBibiliotek" element={<Bibliothek />} />
         <Route path="/Anlegen" element={<Anlegen/>}/>
+        <Route path="/karteikarten_ansicht" element={<KarteikartenAnsicht />} />
       </Route>
     </Routes>
   );

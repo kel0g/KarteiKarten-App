@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Start.css"
+import { NavLink } from "react-router-dom";
 
 type Deck = {
   id: string;
@@ -48,14 +49,6 @@ export default function Start() {
     setDecks((prev) => prev.filter((d) => d.id !== deckId));
   };
 
-  const openDeck = (deckId: string) => {
-    // Variante A: Navigation (React Router)
-    // navigate(`/anlegen/${deckId}`);
-
-    // Variante B: erstmal nur debug
-    console.log("Öffnen:", deckId);
-    alert(`Öffnen: ${deckId} (Route/Seite als nächstes bauen)`);
-  };
   return (
     <>
       <h2 className="sectionHeading">Recents</h2>
@@ -83,9 +76,11 @@ export default function Start() {
                   </div>
 
                   <div className="deckActions">
-                    <button className="btnOpen" onClick={() => openDeck(deck.id)}>
+                    <NavLink to="/karteikarten_erstellen" className={({isActive}) => `navItem ${isActive ? "active": ""}`}>
+                    <button className="btnOpen">
                       Öffnen
                     </button>
+                    </NavLink>
                     <button className="btnDelete" onClick={() => deleteDeck(deck.id)}>
                       Löschen
                     </button>
