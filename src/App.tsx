@@ -11,7 +11,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Start />} />
         <Route path="/deineBibiliotek" element={<Bibliothek />} />
-        <Route path="/Anlegen" element={<Anlegen/>}/>
+        <Route path="/Anlegen" element={<Anlegen />}/>
         <Route path="/karteikarten_ansicht" element={<KarteikartenAnsicht />} />
       </Route>
     </Routes>
