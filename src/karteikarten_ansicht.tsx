@@ -1,35 +1,110 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./karteikarten_anzeigen.css";
 
 type Card = { id: string; front: string; back: string; tags?: string[] };
-type Deck = { id: string; name: string; description?: string; cards: Card[] };
+type Deck = { id: string; name: string; description?: string };
 
-const demoDeck: Deck = {
-  id: "demo",
-  name: "Bio – Kapitel 3",
-  description: "Karteikarten für die nächste Klausur.",
-  cards: [
-    { id: "1", front: "Was ist Photosynthese?", back: "Umwandlung von Lichtenergie in chemische Energie…", tags: ["bio"] },
-    { id: "2", front: "Ableitung von sin(x)", back: "cos(x)", tags: ["mathe"] },
-    { id: "3", front: "HTTP 404", back: "Resource not found", tags: ["web", "http"] },
-  ],
-};
+const API_BASE = "http://127.0.0.1:5000";
 
 export default function KarteikartenAnsicht() {
-  const [deck] = useState<Deck>(demoDeck);
+  const { deckId } = useParams<{ deckId: string }>();
+
+  const [deck, setDeck] = useState<Deck | null>(null);
+  const [cards, setCards] = useState<Card[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [query, setQuery] = useState("");
   const [flipped, setFlipped] = useState<Record<string, boolean>>({});
 
+  useEffect(() => {
+    const load = async () => {
+      if (!deckId) {
+        setError("Keine Deck-ID in der URL gefunden.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Deck-Metadaten laden
+        const deckRes = await fetch(`${API_BASE}/decks/${deckId}`);
+        if (!deckRes.ok) throw new Error(`Deck HTTP ${deckRes.status}`);
+        const deckData = await deckRes.json();
+        const deckObj: Deck = deckData.deck ?? deckData;
+        setDeck({
+          id: deckObj.id,
+          name: deckObj.name,
+          description: deckObj.description,
+        });
+
+        // Karten für dieses Deck laden (WICHTIG: deckId!)
+        const cardsRes = await fetch(`${API_BASE}/decks/${deckId}/cards`);
+        if (!cardsRes.ok) throw new Error(`Cards HTTP ${cardsRes.status}`);
+        const cardsData = await cardsRes.json();
+        const list: Card[] = Array.isArray(cardsData) ? cardsData : (cardsData.cards ?? []);
+        setCards(list);
+
+        setFlipped({});
+      } catch (e) {
+        console.error(e);
+        setDeck(null);
+        setCards([]);
+        setError("Deck/Karten konnten nicht geladen werden.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+  }, [deckId]);
+
   const filteredCards = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return deck.cards;
-    return deck.cards.filter((c) => {
+    if (!q) return cards;
+    return cards.filter((c) => {
       const tags = (c.tags ?? []).join(" ").toLowerCase();
-      return c.front.toLowerCase().includes(q) || c.back.toLowerCase().includes(q) || tags.includes(q);
+      return (
+        (c.front ?? "").toLowerCase().includes(q) ||
+        (c.back ?? "").toLowerCase().includes(q) ||
+        tags.includes(q)
+      );
     });
-  }, [deck.cards, query]);
+  }, [cards, query]);
 
   const toggleFlip = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
+
+  if (loading) {
+    return (
+      <div className="viewPage">
+        <div className="viewEmptyState">Lade Karten…</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="viewPage">
+        <div className="viewEmptyState">{error}</div>
+        <div style={{ textAlign: "center", marginTop: 12 }}>
+          <button className="viewBackBtn" type="button" onClick={() => window.history.back()}>
+            ← Zurück
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!deck) {
+    return (
+      <div className="viewPage">
+        <div className="viewEmptyState">Deck nicht gefunden.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="viewPage">
@@ -42,7 +117,7 @@ export default function KarteikartenAnsicht() {
           <div className="viewTitleWrap">
             <h1 className="viewTitle">{deck.name}</h1>
             <p className="viewSub">
-              {deck.description || "Keine Beschreibung"} • {deck.cards.length} Karten
+              {deck.description || "Keine Beschreibung"} • {cards.length} Karten
             </p>
           </div>
         </div>
@@ -58,7 +133,7 @@ export default function KarteikartenAnsicht() {
               onChange={(e) => setQuery(e.target.value)}
             />
             <div className="viewCount">
-              {filteredCards.length} / {deck.cards.length}
+              {filteredCards.length} / {cards.length}
             </div>
           </div>
         </div>

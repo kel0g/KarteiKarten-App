@@ -103,3 +103,194 @@
 .btnDelete:hover {
   opacity: 0.92;
 }
+
+/* =========================
+   PAGE LAYOUT
+========================= */
+
+.viewPage {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.viewMain {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.viewHeader {
+  margin-bottom: 20px;
+}
+
+.viewHeaderLeft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.viewTitleWrap {
+  flex: 1;
+  min-width: 250px;
+}
+
+.viewTitle {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.viewSub {
+  margin: 4px 0 0;
+  opacity: 0.7;
+}
+
+.viewBackBtn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.viewToolbar {
+  margin-bottom: 20px;
+}
+
+.viewSearchWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.viewSearch {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.viewCount {
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+/* =========================
+   GRID (AUTO RESPONSIVE)
+========================= */
+
+.viewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.viewCard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.viewCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.viewCardNum {
+  font-weight: bold;
+}
+
+.viewTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.viewTag {
+  background: #eef2ff;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+.viewFlipBtn {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.viewCardBody {
+  margin-top: 8px;
+}
+
+.viewLabel {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+.viewText {
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.viewEmptyState {
+  text-align: center;
+  margin-top: 40px;
+  opacity: 0.6;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+
+@media (max-width: 600px) {
+
+  .viewPage {
+    padding: 14px;
+  }
+
+  .viewTitle {
+    font-size: 1.4rem;
+  }
+
+  .viewGrid {
+    gap: 14px;
+  }
+
+  .viewCard {
+    padding: 14px;
+  }
+
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Start.css"
+import "./Start.css";
 import { NavLink } from "react-router-dom";
 
 type Deck = {
@@ -13,16 +13,27 @@ type Deck = {
 export default function Start() {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadDecks = async () => {
     try {
       setLoading(true);
+      setError(null);
+
       const res = await fetch("http://127.0.0.1:5000/decks");
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
       const data = await res.json();
-      setDecks(data.decks ?? []);
+
+      // ✅ Unterstützt: {decks:[...]} ODER direkt [...]
+      const list: Deck[] = Array.isArray(data) ? data : (data.decks ?? []);
+      setDecks(list);
     } catch (e) {
       console.error("Fehler beim Laden der Decks:", e);
       setDecks([]);
+      setError("Decks konnten nicht geladen werden (API/CORS/Server).");
     } finally {
       setLoading(false);
     }
@@ -36,17 +47,22 @@ export default function Start() {
     const ok = confirm("Willst du dieses Lernset wirklich löschen?");
     if (!ok) return;
 
-    const res = await fetch(`http://127.0.0.1:5000/decks/${deckId}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/decks/${deckId}`, {
+        method: "DELETE",
+      });
 
-    if (!res.ok) {
-      alert("Löschen fehlgeschlagen.");
-      return;
+      if (!res.ok) {
+        alert("Löschen fehlgeschlagen.");
+        return;
+      }
+
+      // ✅ UI direkt aktualisieren
+      setDecks((prev) => prev.filter((d) => d.id !== deckId));
+    } catch (e) {
+      console.error("Fehler beim Löschen:", e);
+      alert("Löschen fehlgeschlagen (Server nicht erreichbar).");
     }
-
-    // UI direkt aktualisieren
-    setDecks((prev) => prev.filter((d) => d.id !== deckId));
   };
 
   return (
@@ -55,12 +71,14 @@ export default function Start() {
 
       <main className="main">
         <div className="content">
-          {/* ✅ Demo-Block ist weg/unsichtbar */}
-
           {loading ? (
             <div className="deckEmpty">Lade Lernsets…</div>
+          ) : error ? (
+            <div className="deckEmpty">{error}</div>
           ) : decks.length === 0 ? (
-            <div className="deckEmpty">Keine Lernsets gefunden. Speichere zuerst eins.</div>
+            <div className="deckEmpty">
+              Keine Lernsets gefunden. Speichere zuerst eins.
+            </div>
           ) : (
             <div className="deckGrid">
               {decks.map((deck) => (
@@ -71,17 +89,26 @@ export default function Start() {
                     {deck.description ? (
                       <div className="deckDesc">{deck.description}</div>
                     ) : (
-                      <div className="deckDesc deckDescMuted">Keine Beschreibung</div>
+                      <div className="deckDesc deckDescMuted">
+                        Keine Beschreibung
+                      </div>
                     )}
                   </div>
 
                   <div className="deckActions">
-                    <NavLink to="/karteikarten_erstellen" className={({isActive}) => `navItem ${isActive ? "active": ""}`}>
-                    <button className="btnOpen">
+                    {/* ✅ Öffnen führt jetzt zu genau diesem Deck */}
+                    <NavLink
+                      to={`/decks/${deck.id}`}
+                      className="btnOpen"
+                      style={{ textDecoration: "none" }}
+                    >
                       Öffnen
-                    </button>
                     </NavLink>
-                    <button className="btnDelete" onClick={() => deleteDeck(deck.id)}>
+
+                    <button
+                      className="btnDelete"
+                      onClick={() => deleteDeck(deck.id)}
+                    >
                       Löschen
                     </button>
                   </div>

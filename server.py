@@ -113,7 +113,36 @@ def delete_deck(deck_id):
         conn.commit()
 
     return jsonify({"ok": True, "deleted_deck_id": deck_id})
-    
+
+@app.get("/decks/<deck_id>")
+def get_deck(deck_id):
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        row = cur.execute(
+            "SELECT id, name, description, created_at FROM decks WHERE id = ?",
+            (deck_id,)
+        ).fetchone()
+
+        if row is None:
+            return jsonify({"error": "Deck not found"}), 404
+
+    return jsonify(dict(row))
+
+@app.get("/decks/<deck_id>/cards")
+def get_cards_for_deck(deck_id):
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        rows = cur.execute(
+            "SELECT id, front, back, created_at FROM cards WHERE deck_id = ? ORDER BY created_at ASC",
+            (deck_id,)
+        ).fetchall()
+
+    return jsonify({"cards": [dict(r) for r in rows]})
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
